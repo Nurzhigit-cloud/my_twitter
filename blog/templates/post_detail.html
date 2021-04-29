@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="post">
+        {% if post.published_date %}
+            <div class="date">
+                <p>Дата создания: {{ post.published_date }}</p>
+            </div>
+        {% endif %}
+        {% if user.is_authenticated %}
+            <button><a  href="{% url 'post_edit' pk=post.pk %}">редактировать</a></button>  или  <button><a href="{% url 'post_delete' pk=post.pk %}">Удалить</a></button></a>
+        {% endif %}
+        <h3>Название: {{ post.title }}</h3>
+        <h5>Тексе: {{ post.text|linebreaksbr }}</h5>
+
+
+        <p>Комментария:</p>
+        <hr>
+
+        <p>Дoбавить комментария</p>
+
+        {% with comments.count as total_comments %}
+            <h2>{{ total_comments }} Коментария{{ total_comments|pluralize }}</h2>
+            {% endwith %}
+            {% for comment in comments %}
+            {{ comment.author }}
+            <div class="comment">
+            <p class="info">
+            Comment {{ forloop.counter }} by {{ comment.author }}
+            {{ comment.date_posted }}
+            </p>
+            {{ comment.content|linebreaks }}
+            </div>
+            {% empty %}
+            <p>There are no comments yet.</p>
+            {% endfor %}
+
+
+
+        <div class="col-4">
+            <form action="" id="add_form" method="post">
+                {% csrf_token %}
+                {{form.as_p}}
+            </form>
+        <div class="model-footer">
+             <button  form="add_form" type="submit" class="btn btn-primary">добавить</button>
+        </div>
+
+        </div>
+    </div>
+
+{% endblock %}

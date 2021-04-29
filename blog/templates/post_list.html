@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% for post in posts %}
+        <div class="post">
+            <div class="date">
+                {{ post.published_date }}
+            </div>
+            <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+            <p>{{ post.text|linebreaksbr }}</p>
+        </div>
+    {% endfor %}
+            <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">Предыдушая страница</a>
+        {% endif %}
+        <span>Старница:  {{ page_obj.number}} </span>
+        {% if page_obj.has_next %}
+            <a href="?page= {{ page_obj.next_page_number }}">Следуюшая страница</a>
+
+        {% endif %}
+
+        </div>
+{% endblock %}

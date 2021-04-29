@@ -1,0 +1,44 @@
+{% load static %}
+<html>
+    <head>
+        <title>Twitter</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    </head>
+    <body>
+    <div class="page-header">
+        {% if user.is_authenticated %}
+            <a href="{% url 'post_create' %}" class="top-menu">Создать<span class="glyphicon glyphicon-plus"></span></a>
+        {% endif %}
+         {% if user.is_authenticated %}
+        <span>Hello, {{ user.email }} </span>
+        <a href="{% url 'logout' %}">Выйти</a>
+        {% else %}
+          <span><a href="{% url 'login' %}">Войдите</a>или <a href="{% url 'register' %}">Зарегистрируйте</a></span>
+        {% endif %}
+
+            <a href="{% url 'profile' %}" class="top-menu">Профил<span class="nav-link"></span></a>
+        <form method="get" action="{% url 'search-results' %}">
+            <input type="search" name="q" />
+            <button type="submit">Искать</button>
+
+        </form>
+        <h1><a href="/">Twitter</a></h1>
+    </div>
+    <div class="content container">
+        <div class="row">
+            <div class="col-md-8">
+            {% block content %}
+            {% endblock %}
+            </div>
+        </div>
+           {% if request.user.is_authenticated %}
+
+    {% endif %}
+
+    </span>
+    </div>
+</body>
+</html>

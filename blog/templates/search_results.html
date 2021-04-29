@@ -1,0 +1,6 @@
+
+  <h1>Результаты поиска</h1>
+  {% for prod in results %}
+    <a href="{% url 'post_detail' prod.id %}">{{prod.title}}</a>
+  <h1>{{ prod.author }}</h1>
+  {% endfor %}
